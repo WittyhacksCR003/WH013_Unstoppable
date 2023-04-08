@@ -5,7 +5,7 @@ export default function VideoInput() {
   const [source, setSource] = React.useState();
   const [videoUrl, setVideoUrl] = useState();
   const [isUploaded, setIsUploaded] = useState(false);
-
+  console.log("Is uploaded : ", isUploaded);
   const handleFileChange = (event) => {
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
