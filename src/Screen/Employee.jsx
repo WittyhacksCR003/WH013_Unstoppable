@@ -8,6 +8,7 @@ const Employee = () => {
         Upload the Video here
       </p>
       <VideoDisplay />
+      <div className="my-4"></div>
     </div>
   );
 };

@@ -15,6 +15,7 @@ CORS(app, support_credentials=True)
 def upload():
     video = request.files['file']
     video.save(video.filename)  
+    
     filename = video.filename
     vid = mp.VideoFileClip(filename)
     audio = vid.audio
@@ -23,7 +24,6 @@ def upload():
     audio.write_audiofile(audio_file_name)
     
     recognizer = sr.Recognizer()
-    
     audioFile = sr.AudioFile(audio_file_name)
     with audioFile as source:
         data = recognizer.record(source)
@@ -33,6 +33,8 @@ def upload():
     from nltk.sentiment import SentimentIntensityAnalyzer
     analyzer = SentimentIntensityAnalyzer()
     sentiment_scores = analyzer.polarity_scores(text)
+    print("Sentiment score is : ")
+    print(sentiment_scores)
     sentiment = ""
     if sentiment_scores["compound"] >= 0.05:
         sentiment = "Positive"

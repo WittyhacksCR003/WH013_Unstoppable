@@ -10,12 +10,10 @@ const VideoDisplay=()=>{
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
-    console.log(file);
     setVideoUrl(url);
     setIsUploaded(true)
     setSource(file);
   };
-  console.log(videoUrl);
 
   const onSubmit = () => {
     const formData = new FormData();
@@ -37,8 +35,7 @@ const VideoDisplay=()=>{
   };
 
   return (
-    <div className="  flex flex-col items-center justify-center w-max ">
-      
+    <div className="VideoInput">
       <input
         ref={inputRef}
         type="file"
@@ -56,14 +53,13 @@ const VideoDisplay=()=>{
         />
       )}
       {/* <div className="VideoInput_footer">{source || "Nothing selected"}</div> */}
-   
-      {isUploaded ? (
-       <button
-       onClick={onSubmit}
-       className="btn-grad p-1 text-sm font-semibold leading-6 text-gray-900"
-     >
-       Submit<span aria-hidden="true">&rarr;</span>
-     </button>
+      {source ? (
+        <button
+          onClick={onSubmit}
+          className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
+        >
+          Submit
+        </button>
       ) : null}
     </div>
   );

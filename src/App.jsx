@@ -1,4 +1,3 @@
-
 import { useLayoutEffect, useState } from "react";
 import "./App.css";
 import Hero from "./component/Hero/Hero.jsx";
@@ -57,7 +56,6 @@ function App() {
   return (
     <div className="App">
       <Hero key={"Hero"} user={user} handleLogout={handleLogout} />
-
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route
@@ -80,7 +78,7 @@ function App() {
             path="/Signup"
             element={<Signup user={user} handleUser={handleUser} />}
           />
-      <Route path="/Admin" element={<Admin />} />
+          <Route path="/Admin" element={<Admin />} />
         </Routes>
       </AnimatePresence>
 

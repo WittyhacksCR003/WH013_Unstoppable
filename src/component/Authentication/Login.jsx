@@ -1,28 +1,22 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "axios"
-const Login = ({user,handleUser}) => { 
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  
-  const handleLogin=(e)=>{
+import axios from "axios";
+
+const Login = ({ user, handleUser }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    const data = {
-      email: email,
-      password:password
-    };
-   // console.log(jname);
     axios
-      .post(`http://localhost:3000/api/login`, data)
+      .post(`http://localhost:3000/api/login`, { email, password })
       .then((response) => {
-        //response=response
-        //console.log(response);
-        handleUser(response.data.name,email,response.data.token)
+        handleUser(response.data.name, email, response.data.token);
       })
       .catch((err) => console.error(err));
+  };
 
-  }
   return (
     <motion.div
       initial={{ opacity: 0.3 }}
@@ -33,10 +27,7 @@ const Login = ({user,handleUser}) => {
       exit={{ opacity: 0 }}
       className="flex flex-col justify-center items-center m-5 lg:m-10"
     >
-      <div
-        className="md:w-5/12 lg:max-w-xl flex flex-col  items-center shadow-lg shadow-slate-400 justify-between  backdrop-blur-[2.5px]  bg-transparent"
-        // aria-label="Global"
-      >
+      <div className="md:w-5/12 lg:max-w-xl flex flex-col  items-center shadow-lg shadow-slate-400 justify-between  backdrop-blur-[2.5px]  bg-transparent">
         <div className="w-full p-7 py-2  rounded-md lg:max-w-xl">
           <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
             Log in
@@ -52,7 +43,7 @@ const Login = ({user,handleUser}) => {
               <input
                 type="email"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -66,7 +57,7 @@ const Login = ({user,handleUser}) => {
               <input
                 type="password"
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -74,7 +65,10 @@ const Login = ({user,handleUser}) => {
               Forget Password?
             </a>
             <div className="mt-6">
-              <button onClick={(e)=>handleLogin(e)} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+              <button
+                onClick={(e) => handleLogin(e)}
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              >
                 Login
               </button>
             </div>
@@ -112,7 +106,6 @@ const Login = ({user,handleUser}) => {
               </svg>
             </button>
           </div>
-
           <p className="mt-8 text-xs font-light text-center text-gray-700">
             {" "}
             Don't have an account?{" "}
