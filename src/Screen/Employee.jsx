@@ -1,13 +1,13 @@
 import React from "react";
-import VideoInput from "../Component/videoDisplay";
+import VideoDisplay from "../component/videoDisplay/VideoDisplay.jsx";
 
 const Employee = () => {
   return (
-    <div className="flex items-center justify-center flex-col h-[100vh]">
+    <div className="flex relative items-center justify-center flex-col h-max mb-5">
       <p className="text-center text-2xl my-2 font-bold">
         Upload the Video here
       </p>
-      <VideoInput />
+      <VideoDisplay />
     </div>
   );
 };
