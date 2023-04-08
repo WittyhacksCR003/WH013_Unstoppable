@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import time
 from scipy.io import wavfile
+from twilio.rest import Client
 
 nltk.download('vader_lexicon')
 app = Flask(__name__)
@@ -143,24 +144,12 @@ def upload():
 
 
     emotions = [angry, disgust, fear, happy, sad, surprise, neutral]
+    emo = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
     max_emotion = emotions.index(max(emotions))
     print(max_emotion)
     video_data.append(emotions)
 
-    if(max_emotion == 0):
-        print("Angry")
-    elif(max_emotion == 1):
-        print("Disgust")
-    elif(max_emotion == 2):
-        print("Fear")
-    elif(max_emotion == 3):
-        print("Happy")
-    elif(max_emotion == 4):
-        print("Sad")
-    elif(max_emotion == 5):
-        print("Surprise")
-    elif(max_emotion == 6):
-        print("Neutral")
+    print(emo[max_emotion])
         
     frequency_sampling, audio_signal = wavfile.read(audio_file_name)
     
@@ -192,6 +181,17 @@ def upload():
     print(signal_power.shape)
 
     final_data = { "audio" : sentiment_scores, "video" : video_data }
+
+    account_sid = 'ACa1813c9d3eb6caa63492cebdb88100fa'
+    auth_token = '4dbc15e40cacf4518cc576a6340971ac'
+    client = Client(account_sid, auth_token)
+    message_body = "Hello from Analyzer! We have analyzed your video and found that you are " + emo[max_emotion] + "." 
+    message = client.messages \
+                .create(
+                     body=message_body,
+                     from_='+15077283153',  # replace with your Twilio phone number
+                     to='+919301658552'  # replace with your recipient's phone number
+                 )
     # Process the video as needed
     return jsonify(final_data)
 
