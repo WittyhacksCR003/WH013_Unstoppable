@@ -151,34 +151,34 @@ def upload():
 
     print(emo[max_emotion])
         
-    frequency_sampling, audio_signal = wavfile.read(audio_file_name)
+    # frequency_sampling, audio_signal = wavfile.read(audio_file_name)
     
-    print('\nSignal shape:', audio_signal.shape)
-    print('Signal Datatype:', audio_signal.dtype)
-    print('Signal duration:', round(audio_signal.shape[0] / 
-    float(frequency_sampling), 2), 'seconds')
+    # print('\nSignal shape:', audio_signal.shape)
+    # print('Signal Datatype:', audio_signal.dtype)
+    # print('Signal duration:', round(audio_signal.shape[0] / 
+    # float(frequency_sampling), 2), 'seconds')
     
-    audio_signal = audio_signal / np.power(2, 15)
+    # audio_signal = audio_signal / np.power(2, 15)
     
-    length_signal = len(audio_signal)
-    half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
+    # length_signal = len(audio_signal)
+    # half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
     
-    signal_frequency = np.fft.fft(audio_signal)
+    # signal_frequency = np.fft.fft(audio_signal)
     
-    signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
-    signal_frequency **= 2
+    # signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
+    # signal_frequency **= 2
     
-    len_fts = len(signal_frequency)
+    # len_fts = len(signal_frequency)
     
-    if length_signal % 2:
-        signal_frequency[1:len_fts] *= 2
-    else:
-        signal_frequency[1:len_fts-1] *= 2
+    # if length_signal % 2:
+    #     signal_frequency[1:len_fts] *= 2
+    # else:
+    #     signal_frequency[1:len_fts-1] *= 2
         
-    signal_power = 10 * np.log10(signal_frequency)
+    # signal_power = 10 * np.log10(signal_frequency)
     
-    print(signal_power)
-    print(signal_power.shape)
+    # print(signal_power)
+    # print(signal_power.shape)
 
     final_data = { "audio" : sentiment_scores, "video" : video_data }
 
