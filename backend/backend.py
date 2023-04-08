@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import time
 from scipy.io import wavfile
+from twilio.rest import Client
 
 nltk.download('vader_lexicon')
 app = Flask(__name__)
@@ -143,55 +144,54 @@ def upload():
 
 
     emotions = [angry, disgust, fear, happy, sad, surprise, neutral]
+    emo = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
     max_emotion = emotions.index(max(emotions))
     print(max_emotion)
     video_data.append(emotions)
 
-    if(max_emotion == 0):
-        print("Angry")
-    elif(max_emotion == 1):
-        print("Disgust")
-    elif(max_emotion == 2):
-        print("Fear")
-    elif(max_emotion == 3):
-        print("Happy")
-    elif(max_emotion == 4):
-        print("Sad")
-    elif(max_emotion == 5):
-        print("Surprise")
-    elif(max_emotion == 6):
-        print("Neutral")
+    print(emo[max_emotion])
         
-    frequency_sampling, audio_signal = wavfile.read(audio_file_name)
+    # frequency_sampling, audio_signal = wavfile.read(audio_file_name)
     
-    print('\nSignal shape:', audio_signal.shape)
-    print('Signal Datatype:', audio_signal.dtype)
-    print('Signal duration:', round(audio_signal.shape[0] / 
-    float(frequency_sampling), 2), 'seconds')
+    # print('\nSignal shape:', audio_signal.shape)
+    # print('Signal Datatype:', audio_signal.dtype)
+    # print('Signal duration:', round(audio_signal.shape[0] / 
+    # float(frequency_sampling), 2), 'seconds')
     
-    audio_signal = audio_signal / np.power(2, 15)
+    # audio_signal = audio_signal / np.power(2, 15)
     
-    length_signal = len(audio_signal)
-    half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
+    # length_signal = len(audio_signal)
+    # half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
     
-    signal_frequency = np.fft.fft(audio_signal)
+    # signal_frequency = np.fft.fft(audio_signal)
     
-    signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
-    signal_frequency **= 2
+    # signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
+    # signal_frequency **= 2
     
-    len_fts = len(signal_frequency)
+    # len_fts = len(signal_frequency)
     
-    if length_signal % 2:
-        signal_frequency[1:len_fts] *= 2
-    else:
-        signal_frequency[1:len_fts-1] *= 2
+    # if length_signal % 2:
+    #     signal_frequency[1:len_fts] *= 2
+    # else:
+    #     signal_frequency[1:len_fts-1] *= 2
         
-    signal_power = 10 * np.log10(signal_frequency)
+    # signal_power = 10 * np.log10(signal_frequency)
     
-    print(signal_power)
-    print(signal_power.shape)
+    # print(signal_power)
+    # print(signal_power.shape)
 
     final_data = { "audio" : sentiment_scores, "video" : video_data }
+
+    account_sid = 'ACa1813c9d3eb6caa63492cebdb88100fa'
+    auth_token = '4dbc15e40cacf4518cc576a6340971ac'
+    client = Client(account_sid, auth_token)
+    message_body = "Hello from Analyzer! We have analyzed your video and found that you are " + emo[max_emotion] + "." 
+    message = client.messages \
+                .create(
+                     body=message_body,
+                     from_='+15077283153',  # replace with your Twilio phone number
+                     to='+919301658552'  # replace with your recipient's phone number
+                 )
     # Process the video as needed
     return jsonify(final_data)
 
