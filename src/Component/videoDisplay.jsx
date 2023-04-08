@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function VideoInput() {
   const inputRef = React.useRef();
   const [source, setSource] = React.useState();
+  const [videoUrl, setVideoUrl] = useState();
+  const [isUploaded, setIsUploaded] = useState(false);
 
   const handleFileChange = (event) => {
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    console.log(file);
+    setVideoUrl(url);
     setSource(file);
   };
+  console.log(videoUrl);
 
   const onSubmit = () => {
     const formData = new FormData();
@@ -20,6 +26,9 @@ export default function VideoInput() {
       .then((response) => {
         // Handle the response from the server
         console.log(response);
+        if (response.status === 200) {
+          setIsUploaded(true);
+        }
       })
       .catch((error) => {
         // Handle any errors that occur during the request
@@ -38,13 +47,13 @@ export default function VideoInput() {
       {source && (
         <video
           className="VideoInput_video border-2 my-3 border-gray-600 rounded-xl"
-          width={innerWidth < 600 ? "85%" : "60%"}
+          width={innerWidth < 600 ? "86%" : "60%"}
           controls
-          src={source}
+          src={videoUrl}
         />
       )}
       {/* <div className="VideoInput_footer">{source || "Nothing selected"}</div> */}
-      {source ? (
+      {isUploaded ? (
         <button
           onClick={onSubmit}
           className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"

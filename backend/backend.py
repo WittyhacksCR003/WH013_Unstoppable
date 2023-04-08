@@ -15,20 +15,21 @@ CORS(app, support_credentials=True)
 def upload():
     video = request.files['file']
     video.save(video.filename)  
-    
-    vid = mp.VideoFileClip("DSA Placement course __ Phase-1 Completed.mp4")
+    filename = video.filename
+    vid = mp.VideoFileClip(filename)
     audio = vid.audio
-    audio.write_audiofile("file.wav")
+    audio_file_name_without_ext = filename.split('.mp4')[0]
+    audio_file_name = "{}.wav".format(audio_file_name_without_ext)
+    audio.write_audiofile(audio_file_name)
     
     recognizer = sr.Recognizer()
     
-    audioFile = sr.AudioFile("file.wav")
+    audioFile = sr.AudioFile(audio_file_name)
     with audioFile as source:
         data = recognizer.record(source)
     text = recognizer.recognize_google(data, key=None)
     print(text)
     
-    nltk.download("vader_lexicon")
     from nltk.sentiment import SentimentIntensityAnalyzer
     analyzer = SentimentIntensityAnalyzer()
     sentiment_scores = analyzer.polarity_scores(text)
