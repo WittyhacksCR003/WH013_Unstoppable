@@ -7,8 +7,23 @@ export default function VideoInput() {
   const handleFileChange = (event) => {
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    setSource(url);
+    setSource(file);
+  };
+
+  const onSubmit = () => {
+    const formData = new FormData();
+    formData.append("file", source);
+    fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        // Handle the response from the server
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the request
+      });
   };
 
   return (
@@ -30,7 +45,10 @@ export default function VideoInput() {
       )}
       {/* <div className="VideoInput_footer">{source || "Nothing selected"}</div> */}
       {source ? (
-        <button className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1">
+        <button
+          onClick={onSubmit}
+          className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
+        >
           Submit
         </button>
       ) : null}
