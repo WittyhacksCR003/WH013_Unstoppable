@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const VideoDisplay=()=>{
+const VideoDisplay = () => {
   const inputRef = React.useRef();
   const [source, setSource] = React.useState();
   const [videoUrl, setVideoUrl] = useState();
@@ -11,7 +11,7 @@ const VideoDisplay=()=>{
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     setVideoUrl(url);
-    setIsUploaded(true)
+    setIsUploaded(true);
     setSource(file);
   };
 
@@ -36,7 +36,6 @@ const VideoDisplay=()=>{
 
   return (
     <div className="  flex flex-col items-center justify-center w-max ">
-      
       <input
         ref={inputRef}
         type="file"
@@ -44,7 +43,6 @@ const VideoDisplay=()=>{
         onChange={handleFileChange}
         accept=".mov,.mp4"
       />
-  
       {source && (
         <video
           className="VideoInput_video border-2 my-3 border-gray-600 rounded-xl"
@@ -64,6 +62,6 @@ const VideoDisplay=()=>{
       ) : null}
     </div>
   );
-}
+};
 
 export default VideoDisplay;
