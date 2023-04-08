@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const shops = new mongoose.Schema({
+const candidates = new mongoose.Schema({
  name:{
     type: String,
     required: true,
   },
+  email:{
+    type: String,
+    required: true,
+  },
+   history:{
+     type: [String]
+   },
   detail: {
     type: String,
     required: true,
   },
-  type:{
-    type: String,
-    required: true,
-  },
-  place: { type: String, required: true },
 });
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -21,7 +23,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isVerified: { type: Boolean },
   verificationToken: { type: String },
-  shops: [shops],
+  candidates: [candidates],
 });
 
 userSchema.pre("save", async function (next) {
