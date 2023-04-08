@@ -10,11 +10,9 @@ export default function VideoInput() {
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
-    console.log(file);
     setVideoUrl(url);
     setSource(file);
   };
-  console.log(videoUrl);
 
   const onSubmit = () => {
     const formData = new FormData();
@@ -53,7 +51,7 @@ export default function VideoInput() {
         />
       )}
       {/* <div className="VideoInput_footer">{source || "Nothing selected"}</div> */}
-      {isUploaded ? (
+      {source ? (
         <button
           onClick={onSubmit}
           className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
