@@ -34,7 +34,7 @@ export default function VideoInput() {
   };
 
   return (
-    <div className="VideoInput flex flex-col items-center">
+    <div className="VideoInput z-[80]  flex flex-col items-center justify-center w-max h-[100vh">
       <input
         ref={inputRef}
         type="file"
