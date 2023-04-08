@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-grad {
-    @apply bg-[linear-gradient(to_right,#FF512F_0%,#F09819_51%,#FF512F_100%)] text-center uppercase transition-[0.5s] bg-[200%_auto] text-[white] shadow-[0_0_20px_#eee]  rounded-[10px] hover:bg-[right_center] hover:text-white hover:no-underline hover:scale-105;
+    @apply bg-[linear-gradient(to_right,#314755_0%,#26a0da_51%,#314755_100%)] text-center uppercase transition-[0.5s] bg-[200%_auto] text-[white] shadow-[0_0_20px_#eee]  rounded-[10px] hover:bg-[right_center] hover:text-white hover:no-underline hover:scale-105;
   }
   .text-grad {
     color: #6cfac9;
