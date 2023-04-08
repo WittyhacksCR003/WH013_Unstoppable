@@ -1,14 +1,14 @@
 import React from "react";
-import VideoInput from "./Component/videoDisplay";
+import { Route, Routes } from "react-router-dom";
+import Employee from "./Screen/Employee";
+import Admin from "./Screen/Admin";
 
 const App = () => {
   return (
-    <div className="flex items-center justify-center flex-col h-[100vh]">
-      <p className="text-center text-2xl my-2 font-bold">
-        Upload the Video here
-      </p>
-      <VideoInput />
-    </div>
+    <Routes>
+      <Route path="/" element={<Employee />} />
+      <Route path="/Admin" element={<Admin />} />
+    </Routes>
   );
 };
 
