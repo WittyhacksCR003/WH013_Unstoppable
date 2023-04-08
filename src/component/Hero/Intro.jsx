@@ -14,7 +14,7 @@ const Intro = () => {
       >
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-grad-2 sm:text-6xl">
-            Select Topic And Upload Your Video
+            Upload Your Video
           </h1>
         </div>
       </motion.div>
