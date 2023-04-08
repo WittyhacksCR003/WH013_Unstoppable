@@ -1,15 +1,96 @@
-from flask import Flask, request
+from flask import Flask, request,jsonify 
 from flask_cors import CORS, cross_origin
-
+import numpy as np
 import moviepy.editor as mp
 from google.cloud import speech_v1p1beta1 as speech
 import nltk
 from textblob import TextBlob
 import speech_recognition as sr
 from langdetect import detect
+import cv2
+import os
+from fer import FER
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import time
+from scipy.io import wavfile
 
+nltk.download('vader_lexicon')
 app = Flask(__name__)
 CORS(app, support_credentials=True)
+
+angry=0
+disgust=0
+fear=0
+happy=0
+sad=0
+surprise=0 
+neutral=0
+
+def extract_frames(video_name):	
+    # Read the video from specified path
+    cam = cv2.VideoCapture(video_name)
+
+    try:
+        
+        # creating a folder named data
+        if not os.path.exists('data'):
+            os.makedirs('data')
+
+    # if not created then raise error
+    except OSError:
+        print ('Error: Creating directory of data')
+
+    # frame rate
+    frame_rate = 2
+
+    # calculate interval between frames
+    interval = int(cam.get(cv2.CAP_PROP_FPS) / frame_rate)
+    # frame
+    currentframe = 0
+
+    while(True):
+        
+        # reading from frame
+        ret,frame = cam.read()
+
+        if ret:
+            if currentframe % interval == 0:
+                # if video is still left continue creating images
+                name = './data/frame' + str(int(currentframe/14)) + '.jpg'
+                print ('Creating...' + name)
+
+                # writing the extracted images
+                cv2.imwrite(name, frame)
+
+            # increasing counter so that it will
+            # show how many frames are created
+            currentframe += 1
+        else:
+            break
+
+    # Release all space and windows once done
+    cam.release()
+    cv2.destroyAllWindows()
+    return int(currentframe/14 - 1)
+
+def detect_emotion(frame_path): #frame_path is a string of the path to the image
+    global angry, disgust, fear, happy, sad, surprise, neutral
+    # Input Image
+    try:
+        input_image = cv2.imread(frame_path)
+        emotion_detector = FER()
+        # Output image's information
+        angry = angry + emotion_detector.detect_emotions(input_image)[0]["emotions"]["angry"]
+        disgust = disgust + emotion_detector.detect_emotions(input_image)[0]["emotions"]["disgust"]
+        fear = fear + emotion_detector.detect_emotions(input_image)[0]["emotions"]["fear"]
+        happy = happy + emotion_detector.detect_emotions(input_image)[0]["emotions"]["happy"]
+        sad = sad + emotion_detector.detect_emotions(input_image)[0]["emotions"]["sad"]
+        surprise = surprise + emotion_detector.detect_emotions(input_image)[0]["emotions"]["surprise"]
+        neutral = neutral + emotion_detector.detect_emotions(input_image)[0]["emotions"]["neutral"]
+        print(emotion_detector.detect_emotions(input_image)[0]["emotions"])    
+    except:
+        print ('Error..Analysing next frame')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -53,8 +134,66 @@ def upload():
     else:
         print("Language is not English.")
     
+    number_of_frames = extract_frames(filename)
+
+    video_data = []
+    for i in range(number_of_frames):
+        frame_path = "./data/frame" + str(i) + ".jpg"
+        detect_emotion(frame_path)
+
+
+    emotions = [angry, disgust, fear, happy, sad, surprise, neutral]
+    max_emotion = emotions.index(max(emotions))
+    print(max_emotion)
+    video_data.append(emotions)
+
+    if(max_emotion == 0):
+        print("Angry")
+    elif(max_emotion == 1):
+        print("Disgust")
+    elif(max_emotion == 2):
+        print("Fear")
+    elif(max_emotion == 3):
+        print("Happy")
+    elif(max_emotion == 4):
+        print("Sad")
+    elif(max_emotion == 5):
+        print("Surprise")
+    elif(max_emotion == 6):
+        print("Neutral")
+        
+    frequency_sampling, audio_signal = wavfile.read(audio_file_name)
+    
+    print('\nSignal shape:', audio_signal.shape)
+    print('Signal Datatype:', audio_signal.dtype)
+    print('Signal duration:', round(audio_signal.shape[0] / 
+    float(frequency_sampling), 2), 'seconds')
+    
+    audio_signal = audio_signal / np.power(2, 15)
+    
+    length_signal = len(audio_signal)
+    half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
+    
+    signal_frequency = np.fft.fft(audio_signal)
+    
+    signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
+    signal_frequency **= 2
+    
+    len_fts = len(signal_frequency)
+    
+    if length_signal % 2:
+        signal_frequency[1:len_fts] *= 2
+    else:
+        signal_frequency[1:len_fts-1] *= 2
+        
+    signal_power = 10 * np.log10(signal_frequency)
+    
+    print(signal_power)
+    print(signal_power.shape)
+
+    final_data = { "audio" : sentiment_scores, "video" : video_data }
     # Process the video as needed
-    return 'Video uploaded successfully'
+    return jsonify(final_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
