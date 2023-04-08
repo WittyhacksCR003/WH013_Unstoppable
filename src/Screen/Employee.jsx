@@ -1,5 +1,5 @@
 import React from "react";
-import VideoDisplay from "../component/videoDisplay/VideoDisplay.jsx";
+import VideoDisplay from "../component/VideoDisplay/VideoDisplay.jsx";
 
 const Employee = () => {
   return (

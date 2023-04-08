@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function VideoInput() {
+const VideoDisplay=()=>{
   const inputRef = React.useRef();
   const [source, setSource] = React.useState();
   const [videoUrl, setVideoUrl] = useState();
@@ -12,6 +12,7 @@ export default function VideoInput() {
     const url = URL.createObjectURL(file);
     console.log(file);
     setVideoUrl(url);
+    setIsUploaded(true)
     setSource(file);
   };
   console.log(videoUrl);
@@ -36,7 +37,8 @@ export default function VideoInput() {
   };
 
   return (
-    <div className="VideoInput z-[80]  flex flex-col items-center justify-center w-max h-[100vh">
+    <div className="  flex flex-col items-center justify-center w-max ">
+      
       <input
         ref={inputRef}
         type="file"
@@ -44,6 +46,7 @@ export default function VideoInput() {
         onChange={handleFileChange}
         accept=".mov,.mp4"
       />
+  
       {source && (
         <video
           className="VideoInput_video border-2 my-3 border-gray-600 rounded-xl"
@@ -53,14 +56,17 @@ export default function VideoInput() {
         />
       )}
       {/* <div className="VideoInput_footer">{source || "Nothing selected"}</div> */}
+   
       {isUploaded ? (
-        <button
-          onClick={onSubmit}
-          className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
-        >
-          Submit
-        </button>
+       <button
+       onClick={onSubmit}
+       className="btn-grad p-1 text-sm font-semibold leading-6 text-gray-900"
+     >
+       Submit<span aria-hidden="true">&rarr;</span>
+     </button>
       ) : null}
     </div>
   );
 }
+
+export default VideoDisplay;
