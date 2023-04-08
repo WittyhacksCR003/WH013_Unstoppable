@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request,jsonify 
 from flask_cors import CORS, cross_origin
-
+import numpy as np
 import moviepy.editor as mp
 from google.cloud import speech_v1p1beta1 as speech
 import nltk
@@ -13,6 +13,7 @@ from fer import FER
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import time
+from scipy.io import wavfile
 
 nltk.download('vader_lexicon')
 app = Flask(__name__)
@@ -72,8 +73,6 @@ def extract_frames(video_name):
     cam.release()
     cv2.destroyAllWindows()
     return int(currentframe/14 - 1)
-
-
 
 def detect_emotion(frame_path): #frame_path is a string of the path to the image
     global angry, disgust, fear, happy, sad, surprise, neutral
@@ -137,6 +136,7 @@ def upload():
     
     number_of_frames = extract_frames(filename)
 
+    video_data = []
     for i in range(number_of_frames):
         frame_path = "./data/frame" + str(i) + ".jpg"
         detect_emotion(frame_path)
@@ -145,6 +145,7 @@ def upload():
     emotions = [angry, disgust, fear, happy, sad, surprise, neutral]
     max_emotion = emotions.index(max(emotions))
     print(max_emotion)
+    video_data.append(emotions)
 
     if(max_emotion == 0):
         print("Angry")
@@ -160,9 +161,39 @@ def upload():
         print("Surprise")
     elif(max_emotion == 6):
         print("Neutral")
+        
+    frequency_sampling, audio_signal = wavfile.read(audio_file_name)
+    
+    print('\nSignal shape:', audio_signal.shape)
+    print('Signal Datatype:', audio_signal.dtype)
+    print('Signal duration:', round(audio_signal.shape[0] / 
+    float(frequency_sampling), 2), 'seconds')
+    
+    audio_signal = audio_signal / np.power(2, 15)
+    
+    length_signal = len(audio_signal)
+    half_length = np.ceil((length_signal + 1) / 2.0).astype(np.int)
+    
+    signal_frequency = np.fft.fft(audio_signal)
+    
+    signal_frequency = abs(signal_frequency[0:half_length]) / length_signal
+    signal_frequency **= 2
+    
+    len_fts = len(signal_frequency)
+    
+    if length_signal % 2:
+        signal_frequency[1:len_fts] *= 2
+    else:
+        signal_frequency[1:len_fts-1] *= 2
+        
+    signal_power = 10 * np.log10(signal_frequency)
+    
+    print(signal_power)
+    print(signal_power.shape)
 
+    final_data = { "audio" : sentiment_scores, "video" : video_data }
     # Process the video as needed
-    return ('Video uploaded successfully')
+    return jsonify(final_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

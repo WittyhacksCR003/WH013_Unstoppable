@@ -109,25 +109,26 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).send("Invalid email or password");
     }
-    const token = jwt.sign({ id: user._id }, config.jwtSecret, {
-      expiresIn: config.jwtExpiresIn,
-    });
+    console.log(process.env);
+    const token = jwt.sign({ id: user._id }, process.env.jwt_Secret);
     let message = {
       name: user.username,
       token: token,
     };
     res.json(message);
   } catch (err) {
+    console.log(err);
     res.status(400).send(err.message);
   }
 });
+
 router.get(
   "/logout",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     // Clear the token from client-side storage
     const token = req.headers.authorization.split(" ")[1];
-    jwt.sign(token, "", { expiresIn: 1 }, (logout, err) => {
+    jwt.sign(token, process.env.jwt_Secret, { expiresIn: 1 }, (logout, err) => {
       if (logout) {
         res.send({ msg: "You have been Logged Out" });
       } else {
