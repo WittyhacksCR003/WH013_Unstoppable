@@ -5,7 +5,6 @@ const VideoDisplay = () => {
   const [source, setSource] = React.useState();
   const [videoUrl, setVideoUrl] = useState();
   const [isUploaded, setIsUploaded] = useState(false);
-  console.log("Is uploaded : ", isUploaded);
   const handleFileChange = (event) => {
     const { innerWidth, innerHeight } = window;
     const file = event.target.files[0];
@@ -28,9 +27,10 @@ const VideoDisplay = () => {
         if (response.status === 200) {
           setIsUploaded(true);
         }
+      
       })
       .catch((error) => {
-        // Handle any errors that occur during the request
+        console.log(error, "occured");
       });
   };
 
