@@ -63,7 +63,7 @@ export default function Example({ user, handleLogout }) {
             ) : (
               <Link
                 to={"/login"}
-                className="btn-grad p-1 text-sm font-semibold leading-6 text-gray-900"
+                className="btn-grad py-1 px-2 text-sm font-semibold leading-6 text-gray-900"
               >
                 Sign in <span aria-hidden="true">&rarr;</span>
               </Link>

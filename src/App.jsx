@@ -12,6 +12,7 @@ import Admin from "./Screen/Admin.jsx";
 
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
+import About from "./component/About/About";
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "" });
   const navigate = useNavigate("");
@@ -28,7 +29,9 @@ function App() {
     navigate("/");
   };
   const handleLogout = (e) => {
+   
     e.preventDefault();
+   // console.log("gg");
     axios
       .get(`http://localhost:3000/api/logout`, {
         headers: {
@@ -36,7 +39,7 @@ function App() {
         },
       })
       .then((response) => {
-        //console.log(response);
+        console.log(response);
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("email");
@@ -78,6 +81,7 @@ function App() {
             path="/Signup"
             element={<Signup user={user} handleUser={handleUser} />}
           />
+           <Route path="/About" element={<About />} />
           <Route path="/Admin" element={<Admin />} />
         </Routes>
       </AnimatePresence>
