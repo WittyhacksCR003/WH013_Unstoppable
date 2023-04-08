@@ -1,5 +1,8 @@
 import React from "react";
-import {AiFillTwitterCircle,AiFillInstagram,AiFillLinkedin ,AiFillGithub} from "react-icons/ai"
+import {AiFillTwitterCircle} from "react-icons/ai"
+import {AiFillInstagram} from "react-icons/ai"
+import {AiFillLinkedin} from "react-icons/ai"
+import {AiFillGithub} from "react-icons/ai"
 import { motion } from "framer-motion";
 const Footer = () => {
   return (
@@ -7,7 +10,7 @@ const Footer = () => {
       initial={{ opacity: 0.4 }}
       whileInView={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-min opacity-80 bg-grad-shivam absolute left-0 w-screen shadow-xl pt-3 pb-1 mb-1"
+      className="h-min opacity-80 bg-grad-shivam absolute left-0 w-screen shadow-xl pt-3 mt-[70px] pb-1 mb-1"
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap text-left lg:text-left">
