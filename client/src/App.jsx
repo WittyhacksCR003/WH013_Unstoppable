@@ -5,8 +5,11 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/Authentication/Login";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Intro from "./components/Hero/Intro";
-import VideoDisplay from "./components/VideoDisplay/VideoDisplay";
+//import VideoDisplay from "./components/VideoDisplay/VideoDisplay";
 import Signup from "./components/Authentication/Signup";
+import Employee from "./Screen/Employee";
+import Admin from "./Screen/Admin";
+
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
 function App() {
@@ -62,7 +65,7 @@ function App() {
             element={
               <>
                 <Intro user={user} handleUser={handleUser} />
-                <VideoDisplay user={user} handleUser={handleUser} />
+                <Employee user={user} handleUser={handleUser} />
               </>
             }
           />
@@ -76,6 +79,7 @@ function App() {
             path="/Signup"
             element={<Signup user={user} handleUser={handleUser} />}
           />
+      <Route path="/Admin" element={<Admin />} />
         </Routes>
       </AnimatePresence>
 

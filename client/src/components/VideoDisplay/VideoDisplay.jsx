@@ -53,7 +53,7 @@ export default function VideoInput() {
       {source ? (
         <button
           onClick={onSubmit}
-          className="bg-[#404040] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
+          className="bg-[#404040] btn-grad z-[60] px-4 py-1.5 text-white mobile:rounded-xl md:rounded-sm md:my-2 mobile:my-1"
         >
           Submit
         </button>
