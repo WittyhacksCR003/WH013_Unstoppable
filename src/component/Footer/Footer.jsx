@@ -13,10 +13,10 @@ const Footer = () => {
         <div className="flex flex-wrap text-left lg:text-left">
           <div className="w-full lg:w-6/12 px-4">
             <h4 className="text-3xl fonat-semibold text-blueGray-700">
-              {"contact"}
+              {"Hiring Made Easy"}
             </h4>
             <h5 className="text-lg mt-0 mb-2 text-blueGray-600">
-              {"motion.footer_subtitle"}
+              {"Developed by Team Unstoppable"}
             </h5>
             <div className="mt-5 lg:mb-0 mb-6">
               <button
