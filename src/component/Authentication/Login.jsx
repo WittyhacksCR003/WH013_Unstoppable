@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 
 const Login = ({ user, handleUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -25,46 +26,51 @@ const Login = ({ user, handleUser }) => {
         duration: 0.1,
       }}
       exit={{ opacity: 0 }}
-      className="flex flex-col justify-center items-center m-5 lg:m-10"
+      className="flex flex-col justify-center items-center m-5 lg:m-10 mb-10"
     >
-      <div className="md:w-5/12 lg:max-w-xl flex flex-col  items-center shadow-lg shadow-slate-400 justify-between  backdrop-blur-[2.5px]  bg-transparent">
+      <div className="md:w-5/12 lg:max-w-xl flex flex-col  items-center shadow-xl rounded-lg py-2 shadow-slate-400 justify-between backdrop-blur-[2.5px] bg-transparent">
         <div className="w-full p-7 py-2  rounded-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
+          <h1 className="text-3xl font-bold text-center text-purple-700 uppercase">
             Log in
           </h1>
           <form className="mt-6">
             <div className="mb-2">
-              <label
+              {/* <label
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Email
-              </label>
+              </label> */}
               <input
                 type="email"
+                placeholder="Enter Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full text-center px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
-            <div className="mb-2">
-              <label
+            <div className="my-4">
+              {/* <label
                 htmlFor="password"
                 className="block text-sm font-semibold text-gray-800"
               >
                 Password
-              </label>
+              </label> */}
               <input
                 type="password"
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full text-center px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
-            <a href="#" className="text-xs text-purple-600 hover:underline">
+            <a
+              href="#"
+              className="text-base text-purple-600 hover:underline transition-all"
+            >
               Forget Password?
             </a>
-            <div className="mt-6">
+            <div className="mt-5">
               <button
                 onClick={(e) => handleLogin(e)}
                 className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
@@ -106,15 +112,14 @@ const Login = ({ user, handleUser }) => {
               </svg>
             </button>
           </div>
-          <p className="mt-8 text-xs font-light text-center text-gray-700">
+          <p
+            onClick={() => {
+              history("/signup");
+            }}
+            className="mt-8 text-sm cursor-pointer font-light text-center text-gray-700 underline"
+          >
             {" "}
             Don't have an account?{" "}
-            <Link
-              to={"/signup"}
-              className="btn-grad  m-1 px-[10px] py-[5px] font-medium text-purple-600 hover:underline"
-            >
-              Sign Up
-            </Link>
           </p>
         </div>
       </div>

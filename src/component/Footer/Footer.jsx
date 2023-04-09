@@ -1,9 +1,10 @@
 import React from "react";
-import {AiFillTwitterCircle} from "react-icons/ai"
-import {AiFillInstagram} from "react-icons/ai"
-import {AiFillLinkedin} from "react-icons/ai"
-import {AiFillGithub} from "react-icons/ai"
+import { AiFillTwitterCircle } from "react-icons/ai";
+import { AiFillInstagram } from "react-icons/ai";
+import { AiFillLinkedin } from "react-icons/ai";
+import { AiFillGithub } from "react-icons/ai";
 import { motion } from "framer-motion";
+
 const Footer = () => {
   return (
     <motion.footer
@@ -37,7 +38,6 @@ const Footer = () => {
                 type="button"
               >
                 <AiFillInstagram
-                
                   style={{ marginLeft: "5px", marginTop: "4px" }}
                   size={30}
                   color="black"
@@ -47,7 +47,7 @@ const Footer = () => {
                 className="hover:bg-mid  text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                 type="button"
               >
-                <AiFillLinkedin 
+                <AiFillLinkedin
                   style={{ marginLeft: "5px", marginTop: "4px" }}
                   size={30}
                   color="black"
@@ -58,7 +58,6 @@ const Footer = () => {
                 type="button"
               >
                 <AiFillGithub
-              
                   style={{ marginLeft: "5px", marginTop: "4px" }}
                   size={30}
                   color="black"

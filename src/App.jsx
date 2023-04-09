@@ -9,10 +9,11 @@ import Intro from "./component/Hero/Intro.jsx";
 import Signup from "./component/Authentication/Signup.jsx";
 import Employee from "./Screen/Employee.jsx";
 import Admin from "./Screen/Admin.jsx";
-
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
 import About from "./component/About/About";
+import FooterNew from "./component/Footer/FooterNew";
+
 function App() {
   const [user, setUser] = useState({ name: "", email: "", token: "" });
   const navigate = useNavigate("");
@@ -29,11 +30,10 @@ function App() {
     navigate("/");
   };
   const handleLogout = (e) => {
-   
     e.preventDefault();
-   // console.log("gg");
+    // console.log("gg");
     axios
-      .get(`http://localhost:3000/api/logout`, {
+      .get(`https://hirexa-backend.onrender.com/api/logout`, {
         headers: {
           Authorization: "Bearer " + user.token,
         },
@@ -81,12 +81,13 @@ function App() {
             path="/Signup"
             element={<Signup user={user} handleUser={handleUser} />}
           />
-           <Route path="/About" element={<About />} />
+          <Route path="/About" element={<About />} />
           <Route path="/Admin" element={<Admin />} />
         </Routes>
       </AnimatePresence>
 
-      <Footer key={"footer"} />
+      {/* <Footer key={"footer"} /> */}
+      <FooterNew />
     </div>
   );
 }

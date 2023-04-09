@@ -16,6 +16,10 @@ const Intro = () => {
           <h1 className="text-2xl font-bold tracking-tight text-grad-2 sm:text-6xl">
             Upload Your Video
           </h1>
+          <p className="text-xl py-2 font-normal">
+            Identify strengths in candidates before inviting them for an
+            interview with our service
+          </p>
         </div>
       </motion.div>
     </>

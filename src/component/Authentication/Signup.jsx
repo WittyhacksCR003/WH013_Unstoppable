@@ -1,34 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "axios"
-const Signup = ({user,handleUser}) => {
-  const [name,setName]=useState("");
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  const [confirm_password,setConfirm_password]=useState("");
-  const handleSignUp=(e)=>{
-    e.preventDefault();
-   if(password!==confirm_password){
-    alert("Confirm your password again")
-    return;
-   }
-   const data = {
-    username:name,
-    email: email,
-    password:password,
-    
-  };
-   // console.log(data.username);
-  axios
-    .post(`http://localhost:3000/api/signup`, data)
-    .then((response) => {
-      //console.log(response);
-      handleUser(email,password,response.data.token)
-    })
-    .catch((err) => console.error(err));
+import axios from "axios";
 
-  }
+const Signup = ({ user, handleUser }) => {
+  const history = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirm_password] = useState("");
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    if (password !== confirm_password) {
+      alert("Confirm your password again");
+      return;
+    }
+    const data = {
+      username: name,
+      email: email,
+      password: password,
+    };
+    // console.log(data.username);
+    axios
+      .post(`https://hirexa-backend.onrender.com/api/signup`, data)
+      .then((response) => {
+        //console.log(response);
+        handleUser(email, password, response.data.token);
+      })
+      .catch((err) => console.error(err));
+  };
   return (
     <motion.div
       initial={{ opacity: 0.3 }}
@@ -43,71 +43,54 @@ const Signup = ({user,handleUser}) => {
         className="md:w-5/12 lg:max-w-xl flex flex-col  items-center shadow-lg shadow-slate-400 justify-between  backdrop-blur-[2.5px]  bg-transparent"
         // aria-label="Global"
       >
-        <div className="w-full p-7 py-2  rounded-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
+        <div className="w-full p-7 py- rounded-md lg:max-w-xl">
+          <h1 className="text-3xl font-bold text-center text-purple-700 uppercase">
             Sign Up
           </h1>
           <form className="mt-6">
             <div className="mb-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Full Name
-              </label>
               <input
                 type="text"
+                placeholder="Enter name"
                 value={name}
-                onChange={(e)=>setName(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                onChange={(e) => setName(e.target.value)}
+                className="block w-[95%] text-center m-auto px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Email
-              </label>
               <input
                 type="email"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-[95%] px-4 text-center m-auto py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
 
             <div className="mb-2">
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Password
-              </label>
               <input
                 type="password"
+                placeholder="Enter password"
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-[95%] px-4 text-center m-auto py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="confirm_password"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Confirm Password
-              </label>
               <input
                 type="password"
+                placeholder="Confirm password"
                 value={confirm_password}
-                onChange={(e)=>setConfirm_password(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                onChange={(e) => setConfirm_password(e.target.value)}
+                className="block w-[95%] text-center m-auto px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
 
-            <div className="mt-6">
-              <button onClick={(e)=>handleSignUp(e)} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+            <div className="mt-4">
+              <button
+                onClick={(e) => handleSignUp(e)}
+                className="w-[95%] px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              >
                 Sign Up
               </button>
             </div>
@@ -146,15 +129,15 @@ const Signup = ({user,handleUser}) => {
             </button>
           </div>
 
-          <p className="mt-8 text-xs font-light text-center text-gray-700">
+          <p
+            onClick={() => {
+              e.preventDefault();
+              history("/login");
+            }}
+            className="underline mt-5 text-sm cursor-pointer font-light text-center text-gray-700"
+          >
             {" "}
             Already have an account?{" "}
-            <Link
-              to={"/login"}
-              className="btn-grad  m-1 px-[10px] py-[5px] font-medium text-purple-600 hover:underline"
-            >
-              Log In
-            </Link>
           </p>
         </div>
       </div>
