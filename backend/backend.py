@@ -147,9 +147,6 @@ def upload():
     emo = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
     max_emotion = emotions.index(max(emotions))
     print(max_emotion)
-    video_data.append(emotions)
-
-    print(emo[max_emotion])
         
     # frequency_sampling, audio_signal = wavfile.read(audio_file_name)
     
@@ -180,7 +177,8 @@ def upload():
     # print(signal_power)
     # print(signal_power.shape)
 
-    final_data = { "audio" : sentiment_scores, "video" : video_data }
+    print(text)
+    final_data = { "audio" : sentiment_scores, "video" : emotions, "text" : text }
 
     account_sid = 'ACa1813c9d3eb6caa63492cebdb88100fa'
     auth_token = '4dbc15e40cacf4518cc576a6340971ac'

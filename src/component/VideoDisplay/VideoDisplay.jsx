@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PieChart from "../PieChart/Pie";
 import Report from "../Report/Report";
 
 const VideoDisplay = () => {

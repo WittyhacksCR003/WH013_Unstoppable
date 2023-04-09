@@ -25,8 +25,10 @@ export default function Example({ user, handleLogout }) {
           aria-label="Global"
         >
           <div className="flex lg:flex-1 ">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+            <a href="#" className="p-1.5">
+              <span className="text-2xl font-bold capitalize z-10 text-white">
+                HIREXA
+              </span>
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -56,14 +58,14 @@ export default function Example({ user, handleLogout }) {
             {user.token ? (
               <button
                 onClick={handleLogout}
-                className="btn-grad p-1 text-sm font-semibold leading-6 text-gray-900"
+                className="bg-white text-gray-900 px-3 py-0.5 rounded-md"
               >
                 Logout <span aria-hidden="true">&rarr;</span>
               </button>
             ) : (
               <Link
                 to={"/login"}
-                className="btn-grad py-1 px-2 text-sm font-semibold leading-6 text-gray-900"
+                className="bg-white text-gray-900 px-3 py-0.5 rounded-md"
               >
                 Sign in <span aria-hidden="true">&rarr;</span>
               </Link>
