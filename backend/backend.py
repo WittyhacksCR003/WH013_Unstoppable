@@ -192,6 +192,10 @@ def upload():
                      from_='+15077283153',  # replace with your Twilio phone number
                      to='+919301658552'  # replace with your recipient's phone number
                  )
+    if message.sid:
+        print('Message sent successfully')
+    else:
+        print('Message failed to send')
     # Process the video as needed
     return jsonify(final_data)
 
